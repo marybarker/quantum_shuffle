@@ -16,7 +16,7 @@ def calclaurent(base, cartan, idx):
     return power
 
 
-def specinterleave(str1, str2, min_idx=0):
+def interleave(str1, str2, min_idx=0):
     """
 
     """
@@ -41,7 +41,7 @@ def specinterleave(str1, str2, min_idx=0):
         newlist = [str1[0:i] + [mychar] + str1[i:n1] for i in minvec]
 
         for i, st in enumerate(newlist):
-            ret_val = specinterleave(st, str2[1:n2], minvec[i]+1)
+            ret_val = interleave(st, str2[1:n2], minvec[i]+1)
             mylist.extend(ret_val)
         return mylist
 
@@ -81,7 +81,7 @@ class QuantumShuffleAlgebra(ShuffleAlgebra):
         mylist = list()
         name1 = [[x, 1] for x in str(w1)]
         name2 = [[x, 2] for x in str(w2)]
-        name3 = specinterleave(name2, name1)
+        name3 = interleave(name2, name1)
         for name in name3:
             word = ''.join([y[0] for y in name])
             nameval = calclaurent(name, self._cartan, self._idx)
