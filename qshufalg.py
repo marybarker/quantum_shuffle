@@ -28,6 +28,9 @@ Bernard Leclerc, Dual canonical bases, quantum shuffles and q-characters, Mathem
 #*****************************************************************************
 
 from sage.algebras.shuffle_algebra import ShuffleAlgebra
+from sage.rings.all import QQ
+from sage.combinat.root_system.cartan_matrix import CartanMatrix
+from sage.rings.polynomial.laurent_polynomial_ring import LaurentPolynomialRing
 from sage.combinat.words.alphabet import Alphabet
 from sage.combinat.words.words import Words
 from sage.combinat.words.word import Word
@@ -36,15 +39,13 @@ class QuantumShuffleAlgebra(ShuffleAlgebra):
     r"""
     INPUT: 
 
-    - ``R`` -- ring
-
     - ``names`` -- generator names for basis (string or alphabet)
 
     - ``cartan`` -- cartan matrix for underlying connectivitystructure
 
     EXAMPLES:: 
 
-        sage: QS = QuantumShuffleAlgebra(LaurentPolynomialRing(QQ,'q'), 'abc', CartanMatrix(['A', 3])); QS
+        sage: QS = QuantumShuffleAlgebra('abc', CartanMatrix(['A', 3])); QS
         Shuffle Algebra on 3 generators ['a', 'b', 'c'] over Univariate Laurent Polynomial Ring in q over Rational Field
 
         sage: mul(QS.gens())
@@ -77,7 +78,7 @@ class QuantumShuffleAlgebra(ShuffleAlgebra):
         (1+q^2)*B['caba'] + (q+q^3)*B['cbaa']
 
     """
-    def __init__(self, R=LaurentPolynomialRing(QQ,'q'), names='ab', cartan=0):
+    def __init__(self, names='ab', cartan=0):
         """
         initialize quantum shuffle algebra instance
 
@@ -85,8 +86,7 @@ class QuantumShuffleAlgebra(ShuffleAlgebra):
             sage: QS = QuantumShuffleAlgebra(); QS
             Shuffle Algebra on 2 generators ['a', 'b'] over Univariate Laurent Polynomial Ring in q over Rational Field
         """
-        if R not in Rings():
-            raise TypeError("argument R must be a ring")
+        R = LaurentPolynomialRing(QQ,'q')
 
         names = Alphabet(names)
 
